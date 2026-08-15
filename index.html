@@ -31,7 +31,9 @@ button:hover{transform:translateY(-3px) scale(1.04)}.noButton{background:#aaa0b0
 </style>
 </head>
 <body>
-
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 <section id="passwordPage" class="page active"><div class="card">
 <div class="bigEmoji">🔐</div><h1>A Little Surprise 💗</h1>
 <p>Someone prepared something special for you... 👀<br><br><strong>Enter the secret password 🔑</strong></p>
@@ -133,9 +135,23 @@ function showPage(pageId) {
 function checkPassword() {
     var entered = document.getElementById("password").value;
     var error = document.getElementById("passwordError");
+
     if (entered === correctPassword) {
+
+        var bgMusic = document.getElementById("bgMusic");
+
+        bgMusic.volume = 0.7;
+
+        bgMusic.play().catch(function() {
+            console.log("Music autoplay was blocked by the browser.");
+        });
+
         createHearts(20);
-        setTimeout(function() { showPage("quizPage"); }, 500);
+
+        setTimeout(function() {
+            showPage("quizPage");
+        }, 500);
+
     } else {
         error.innerText = "Hmm... that's not the password 🥺";
     }
